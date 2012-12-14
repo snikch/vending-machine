@@ -51,7 +51,7 @@ Once you have a store instance you can retrieve your objects
 ```ruby
 customers = store.customers
 customers.first.customer_code
-=> ["WALKIN"]
+=> "WALKIN"
 ```
 
 ### Payment Types
@@ -94,9 +94,9 @@ sales.map{|sale| sale.total_price + sale.total_tax }
 => [1337.0, 1341.95]
 
 sales.first.register_sale_products.map &:name
-=> ["T-shirt (Demo)"]
+=> ["T-shirt (Demo)", "Coffee (Demo)"]
 
-sales.first.register_sale_products.first.to_s
+sales.first.register_sale_products.first
 => "#<Vend::RegisterSaleProduct:0x007fe238720d68>"
 ```
 
@@ -104,7 +104,7 @@ sales.first.register_sale_products.first.to_s
 
 ```ruby
 store.registers.map &:name
-=> ["Main Register"]
+=> ["Main Register", "Back office Register"]
 ```
 
 ### Suppliers
@@ -118,10 +118,10 @@ store.suppliers.map &:name
 
 ```ruby
 store.taxes.map &:name
-=> ["NZ GST", "AU GST", "Some other tax"]
+=> ["NZ GST", "AU GST", "Asshole Tax"]
 ```
 
-The `default` scope will provide you the first returned default tax (note, this still retrieves all taxes).
+The `default` scope will provide you the first returned default tax (note, this still retrieves all taxes from the API).
 
 ```ruby
 store.taxes.default.name
