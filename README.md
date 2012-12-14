@@ -93,10 +93,10 @@ sales = store.sales
 sales.map{|sale| sale.total_price + sale.total_tax }
 => [1337.0, 1341.95]
 
-sales.first.register_sale_products.map &:name
+sales.first.products.map &:name
 => ["T-shirt (Demo)", "Coffee (Demo)"]
 
-sales.first.register_sale_products.first
+sales.first.products.first
 => "#<Vend::RegisterSaleProduct:0x007fe238720d68>"
 ```
 
