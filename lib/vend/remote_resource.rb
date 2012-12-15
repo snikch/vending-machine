@@ -1,10 +1,36 @@
+require 'json'
+
 module Vend
   class RemoteResource < Resource
     include Vend::DeclarativeSetters
     include Vend::Paths
 
+    attr_reader :error
+
     def save
-      id ? save_existing : save_new
+      begin
+        save!
+      rescue ValidationFailed
+        (@error ||= []) << $!.message
+        false
+      end
+    end
+
+    def save!
+      save_path = id ? update_path : self.class.create_path
+      method = id ? :put : :post
+      response = store.send(method, path: save_path,
+        data: sendable_attributes.to_json,
+        status: 200
+      ).data
+
+      if response['status'] && response['status'] == 'error'
+        raise ValidationFailed.
+          new [response['error'], response['details']].join(': ')
+      end
+
+      self.attributes = response[self.class.path]
+      true
     end
 
     def load
@@ -23,24 +49,6 @@ module Vend
         updated_at
       }
       attributes.delete_if{|name,value| blacklist.include? name }.dup
-    end
-
-    def save_new
-      self.attributes = store.post(
-        path: create_path,
-        parameters: sendable_attributes,
-        status: 200
-      ).data
-      self
-    end
-
-    def save_existing
-      self.attributes = store.put(
-        path: update_path,
-        parameters: sendable_attributes,
-        status: 200
-      ).data
-      self
     end
   end
 end

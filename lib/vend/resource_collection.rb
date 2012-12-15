@@ -26,6 +26,10 @@ module Vend
       build(attributes).tap(&:save)
     end
 
+    def create!(attributes = {})
+      build(attributes).tap(&:save!)
+    end
+
     def build(attributes)
       @klass.new(attributes.merge store: @store)
     end

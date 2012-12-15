@@ -69,6 +69,7 @@ store.products.map &:name
 => ["Coffee (Demo)", "T-shirt (Demo)", "Discount", "test"]
 ```
 
+#### Scopes
 Scopes available: `active`, `order_by`, `order_direction` and an `order` shortcut to do both order by and direction at once. Scopes are chainable.
 
 ```ruby
@@ -83,6 +84,34 @@ store.products.order_by('name').order_direction('desc').map &:name
 
 store.products.order('name', 'DESC').map &:name
 => ["test", "T-shirt (Demo)", "Discount", "Coffee (Demo)"]
+```
+
+#### Creating a Product
+
+Initialize a new product with `#build`, `#create` or `#create!`.
+
+* `build` create an unsaved instance
+* `create` create an instance, and call `#save`
+* `create!` create an instance, and call `#save!`
+
+
+```ruby
+product = store.products.build name: "Product Name", handle: "prod1", retail_price: 25
+
+# Safe save
+product.save
+=> false
+
+product.error
+=> ["Could not Add or Update: Missing sku"]
+
+# Explosive save
+product.save!
+=> Vend::ValidationFailed: Could not Add or Update: Missing sku
+
+product.sku = 'prod1'
+product.save!
+=> true
 ```
 
 ### Register Sales
@@ -138,7 +167,9 @@ store.users.map &:name
 ## Status
 * COMPLETE: GET index resources are implemented, with the exception of Stock Control
 * IN PROGRESS: find  singular resources `store.products.find('some_id')`
-* IN PROGRESS: create resources `store.sale.create products: [product1, product2]`
+* IN PROGRESS: create register sales `store.sale.create products: [product1, product2]`
+* COMPLETE: create products
+* IN PROGRESS: Create Product Variants (This seems to happen when posting a new product with a same handle, but different sku)
 * TODO: Delete resources
 * TODO: Scopes for Customer and Register Sales
 

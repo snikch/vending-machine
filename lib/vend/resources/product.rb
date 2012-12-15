@@ -16,6 +16,13 @@ module Vend
     attribute :tax_rate, Float
 
     ##
+    # Required Attributes
+    attribute :name, String
+    attribute :handle, String
+    attribute :sku, String
+    attribute :retail_price, Float
+
+    ##
     # Scopes
     collection_scope :active, default: true
     collection_scope :order_by
