@@ -191,7 +191,7 @@ store.users.map &:name
 * IN PROGRESS: find  singular resources `store.products.find('some_id')`
 * IN PROGRESS: create register sales `store.sale.create products: [product1, product2]`
 * COMPLETE: create products
-* IN PROGRESS: Create Product Variants (This seems to happen when posting a new product with a same handle, but different sku)
+* COMPLETE: Create Product Variants (This seems to happen when posting a new product with a same handle, but different sku)
 * TODO: Delete resources
 * TODO: Scopes for Customer and Register Sales
 
