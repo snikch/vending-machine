@@ -186,6 +186,19 @@ store.users.map &:name
 => ["A cashier", "Mal Curtis", "Joe Bloggs"]
 ```
 
+## Tips
+
+### Figuring out what attributes a resource has
+Want to know what attributes are on a particular resource? Use `#attributes`. Vending Machine will map all returned attributes to a resource, only a portion of which are defined in the resource’s code (for validation and type coercion).
+
+```ruby
+store.taxes.first.attributes
+=> {:id=>"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+ :rate=>0.15,
+ :default=>true,
+ :name=>"NZ GST"}
+```
+ 
 ## Status
 * COMPLETE: GET index resources are implemented, with the exception of Stock Control
 * IN PROGRESS: find  singular resources `store.products.find('some_id')`
