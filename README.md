@@ -118,12 +118,12 @@ product.save!
 
 Product variants have the same `handle` as another product, but a different `sku`. You can create a variant of a product easily with the `#build_variant`, `#create_variant` and `#create_variant!` methods.
 
-Underneath the hood, it's simply copying attributes to a new instance, then changing the `sku` to either a provided new sku, or appending an incrementing integer to existing `sku`.
+Underneath the hood, it's simply copying attributes to a new instance, then changing the `sku` to either a provided new sku, or appending an incrementing integer to an existing `sku`.
 
 ```ruby
 product.sku = 'my-product'
 product.build_variant(sku: 'my-product-alt')
-=> <#Vend::Product>
+=> #<Vend::Product>
 
 product.build_variant(sku: 'my-product-alt').sku
 => 'my-product-alt'
