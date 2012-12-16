@@ -10,9 +10,9 @@ module Vend
 
     alias_method :initialize_virtus, :initialize
     def initialize attributes={}
-      if attributes[:store_object]
-        @store = store_object
-      end
+      current_attribute_set = attribute_set
+      self.extend(Virtus)
+      attribute_set.merge(current_attribute_set)
       initialize_virtus attributes
     end
 

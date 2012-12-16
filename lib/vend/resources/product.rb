@@ -33,5 +33,36 @@ module Vend
       order_direction direction
     end
 
+    ##
+    # Instance Methods
+    def build_variant attributes = {}
+      unless attributes[:sku]
+        # Increment or Append to sku
+        attributes[:sku] = (
+          sku.match(/[\d]+$/) ?
+            sku.gsub(/[\d]+$/){|match| match.to_i + 1} :
+            sku + '-1'
+        )
+      end
+
+      attributes[:handle] = handle unless attributes[:handle]
+
+      new_attributes = attributes.dup.delete_if do |attribute, value|
+        %w{ created_at updated_at id }.include?(attribute)
+      end.merge attributes
+
+      new_attributes[:store] = store
+
+      self.class.new new_attributes
+    end
+
+    def create_variant sku
+      build_variant(sku).save
+    end
+
+    def create_variant! sku
+      build_variant(sku).save!
+    end
+
   end
 end
