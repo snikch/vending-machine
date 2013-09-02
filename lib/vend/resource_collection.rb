@@ -59,7 +59,26 @@ module Vend
     end
 
     def remote_records
-      http_response.data.first.last
+      # Is there pagination info?
+      pagination = http_response.data["pagination"]
+
+      if pagination
+        # Get all pages
+        data = []
+        page = 1
+        pages = pagination["pages"]
+        while page < pages
+          http_response.data.delete("pagination")
+          data.concat(http_response.data.first.last)
+          @_http_response = nil
+          page += 1
+          (@parameters ||= {})[:page] = page
+        end
+        @parameters.delete(:page)
+        data
+      else
+        http_response.data.first.last
+      end
     end
 
     def records
@@ -74,3 +93,4 @@ module Vend
     end
   end
 end
+
