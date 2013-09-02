@@ -18,7 +18,7 @@ module Vend
 
     def save!
       save_path = id ? update_path : self.class.create_path
-      method = id ? :put : :post
+      method = id ? :post : :post
       response = store.send(method, path: save_path,
         data: sendable_attributes.to_json,
         status: 200
