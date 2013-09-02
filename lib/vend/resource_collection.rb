@@ -67,7 +67,7 @@ module Vend
         data = []
         page = 1
         pages = pagination["pages"]
-        while page < pages
+        while page <= pages
           http_response.data.delete("pagination")
           data.concat(http_response.data.first.last)
           @_http_response = nil
