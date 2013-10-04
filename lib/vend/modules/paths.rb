@@ -31,6 +31,14 @@ module Vend::Paths
     [ self.class.collection_api_path, id ].compact.join("/")
   end
 
+  def close_path
+    [ self.class.collection_api_path, id, 'close' ].compact.join("/")
+  end
+
+  def open_path
+    [ self.class.collection_api_path, id, 'open' ].compact.join("/")
+  end
+
   def self.included(base)
     base.extend(ClassMethods)
   end

@@ -158,6 +158,18 @@ store.registers.map &:name
 => ["Main Register", "Back office Register"]
 ```
 
+#### Open register
+
+```ruby
+store.registers.first.open!
+```
+
+#### Close register
+
+```ruby
+store.registers.first.close!
+```
+
 ### Suppliers
 
 ```ruby
@@ -198,7 +210,7 @@ store.taxes.first.attributes
  :default=>true,
  :name=>"NZ GST"}
 ```
- 
+
 ## Status
 * COMPLETE: GET index resources are implemented, with the exception of Stock Control
 * IN PROGRESS: find  singular resources `store.products.find('some_id')`
