@@ -41,6 +41,28 @@ module Vend
       self
     end
 
+    # Close register
+    def close!
+      if self.is_a? Vend::Register
+        self.attributes = store.post(
+          path: close_path,
+          status: 200
+        ).data
+        self
+      end
+    end
+
+    # Open register
+    def open!
+      if self.is_a? Vend::Register
+        self.attributes = store.post(
+          path: open_path,
+          status: 200
+        ).data
+        self
+      end
+    end
+
     private
 
     def sendable_attributes
