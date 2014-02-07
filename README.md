@@ -2,9 +2,24 @@
 
 Access your [Vend Store](http://vendhq.com) in Ruby! Vending Machine turns the [Vend API](http://docs.vendhq.com/) into Ruby objects, including type coercion and nested objects.
 
+## Basic Auth and Oauth Support
+Vending Machine default Authentication sets to be Baisc Auth.
+
+However, you can switch to Oauth by adding the following code to your initializer.
+
 ```ruby
-# Create an instance of your store
-store = Vend::Store.new('store_name', 'user_name', 'password')
+# config/vending_machine.rb
+Vend.config do |config|
+  config.auth_method = :oauth # default sets to :basic_auth
+end
+
+```
+
+```ruby
+# Create an instance of your store with Basic Auth
+store = Vend::Store.new({:store_name => 'store_name', :username => 'user_name', :password => 'password'})
+# Create an instance of your store with OAuth
+store = Vend::Store.new({:store_name => 'store_name', :auth_token => 'auth_token'})
 
 # Get all your products
 store.products.order('name', 'ASC').map &:name
@@ -41,7 +56,10 @@ All usage revolves around your store, as per Vend itself
 
 
 ```ruby
-store = Vend::Store.new('store_name', 'user_name', 'password')
+# Create an instance of your store with Basic Auth
+store = Vend::Store.new({:store_name => 'store_name', :username => 'user_name', :password => 'password'})
+#Or Create an instance of your store with OAuth
+store = Vend::Store.new({:store_name => 'store_name', :auth_token => 'auth_token'})
 ```
 
 Once you have a store instance you can retrieve your objects
