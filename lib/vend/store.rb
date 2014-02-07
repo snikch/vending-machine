@@ -28,10 +28,6 @@ module Vend
       dispatch :post, options
     end
 
-    def self.test
-      Vend::Config.auth_method
-    end
-
     private
 
     ##
