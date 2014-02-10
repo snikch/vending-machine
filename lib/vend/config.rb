@@ -3,7 +3,7 @@ module Vend
     class << self
 
       VALID_AUTHENTICATION_METHODS = %i(basic_auth oauth)
-      DEAFULT_AUTHENTICATION_METHOD = :basic_auth
+      DEFAULT_AUTHENTICATION_METHOD = :basic_auth
 
       def auth_method=(method)
         if VALID_AUTHENTICATION_METHODS.include?(method.to_sym)
@@ -14,7 +14,7 @@ module Vend
       end
 
       def auth_method
-        @auth_method || DEAFULT_AUTHENTICATION_METHOD
+        @auth_method || DEFAULT_AUTHENTICATION_METHOD
       end
 
     end
