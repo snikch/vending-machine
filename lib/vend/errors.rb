@@ -9,4 +9,6 @@ module Vend
 
   class ServerError < Error; end
 
+  class InvalidConfig < Error; end
+
 end
