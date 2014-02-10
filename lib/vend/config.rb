@@ -2,27 +2,21 @@ module Vend
   module Config
     class << self
 
-      DEFAULT_AUTHENTICATION = :basic_auth
+      VALID_AUTHENTICATION_METHODS = %i(basic_auth oauth)
+      DEAFULT_AUTHENTICATION_METHOD = :basic_auth
 
-      attr_accessor :auth_method
-
-      def reset
-        @authenticate = DEFAULT_AUTHENTICATION
-      end
-
-      def auth_method=(auth_method)
-        if auth_method == :oauth
-          @authenticate = auth_method
+      def auth_method=(method)
+        if VALID_AUTHENTICATION_METHODS.include?(method.to_sym)
+          @auth_method = method.to_sym
+        else
+          raise Vend::InvalidConfig("%s is not a valid authentication method" % method)
         end
-        @authenticate || DEFAULT_AUTHENTICATION
       end
 
       def auth_method
-        @authenticate
+        @auth_method || DEAFULT_AUTHENTICATION_METHOD
       end
 
     end
-    # Set default values for configuration options on load
-    self.reset
   end
 end
