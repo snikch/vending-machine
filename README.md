@@ -2,16 +2,6 @@
 
 Access your [Vend Store](http://vendhq.com) in Ruby! Vending Machine turns the [Vend API](http://docs.vendhq.com/) into Ruby objects, including type coercion and nested objects.
 
-## Basic Auth and Oauth Support
-Authentication defaults Basic Auth. You can switch to Oauth by adding the following code to an initializer.
-
-```ruby
-# config/vending_machine.rb
-Vend.config do |config|
-  config.auth_method = :oauth # default sets to :basic_auth
-end
-
-```
 
 ```ruby
 # Create an instance of your store with Basic Auth
