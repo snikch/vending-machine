@@ -42,6 +42,7 @@ module Vend
     end
 
 
+
     private
 
     def sendable_attributes

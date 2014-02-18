@@ -2,6 +2,7 @@ $: << File.expand_path(File.dirname(__FILE__))
 %w{
   version
   errors
+  config
 
   modules/declarative_setters
   modules/finders
@@ -41,6 +42,14 @@ module Vend
 
     def domain
       @domain || "vendhq.com"
+    end
+
+    def config(&block)
+      if block_given?
+        block.call(Vend::Config)
+      else
+        Vend::Config
+      end
     end
   end
 end

@@ -6,8 +6,14 @@ module Vend
   class Store
     include HasResources
 
-    def initialize name, username, password
-      @name, @credentials = name, [ username, password ]
+    def initialize(credentials={})
+      @authenticator = Vend::Config.auth_method
+      case @authenticator
+      when :basic_auth
+        @name, @credentials = credentials[:store_name], [credentials[:username], credentials[:password]]
+      when :oauth
+        @name, @auth_token =  credentials[:store_name], credentials[:auth_token]
+      end
     end
 
     ##
@@ -47,6 +53,7 @@ module Vend
         response.headers,
         response.body
       )
+
     end
 
     ##
@@ -95,7 +102,12 @@ module Vend
       @_faraday ||= Faraday.new(url) do |conn|
         conn.request :json
         conn.response :json
-        conn.basic_auth *@credentials
+        case @authenticator
+        when :basic_auth
+          conn.basic_auth *@credentials
+        when :oauth
+          conn.authorization :Bearer, @auth_token
+        end
         conn.adapter Faraday.default_adapter
       end
     end
