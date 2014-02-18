@@ -38,6 +38,17 @@ Or install it yourself as:
 
 ## Usage
 
+### Basic Auth and Oauth Support
+Authentication defaults to Basic Auth. You can switch to Oauth by adding the following code to an initializer.
+
+```ruby
+# config/vending_machine.rb
+Vend.config do |config|
+  config.auth_method = :oauth # defaults to :basic_auth
+end
+
+```
+
 ### Get a store instance
 
 All usage revolves around your store, as per Vend itself
